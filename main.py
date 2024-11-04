@@ -54,16 +54,11 @@ for step in range(max_steps):
             categories[n_neighbors].append((i, j))
 
     # 2. 选择事件 (吸附、迁移、脱附)
-#    event_rates = {
-#        "desorption": sum(desorption_rates[n] * len(categories[n]) for n in range(n_categories)),
-#        "migration": sum(migration_rates[n] * len(categories[n]) for n in range(n_categories)),
-#        "adsorption": 1.0  # 假设吸附速率为常数
-#    }
-        event_rates = {
-            "desorption": {n: desorption_rate(n) for n in range(n_categories)},
-            "migration" : {n: migration_rate(n)  for n in range(n_categories)},
-            "adsorption": 1.0  # 假设吸附速率为常数
-        }
+    event_rates = {
+        "desorption": sum(desorption_rates[n] * len(categories[n]) for n in range(n_categories)),
+        "migration": sum(migration_rates[n] * len(categories[n]) for n in range(n_categories)),
+        "adsorption": 1.0 * lattice_size * lattice_size  # 假设吸附速率为常数
+    }
     total_rate = sum(event_rates.values())
     random_choice = np.random.rand() * total_rate
 
